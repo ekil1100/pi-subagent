@@ -2,6 +2,8 @@
 
 将任务委派给专门的子代理（subagent），每个子代理运行在独立的 `pi` 进程中，拥有独立的上下文窗口。
 
+> **pi-subagent** — Delegate tasks to specialized subagents, each running in an isolated `pi` process with its own context window.
+
 ## 安装
 
 ### 全局安装（一行命令）
@@ -34,7 +36,35 @@ pi install git:github.com/ekil1100/pi-subagent@v1.0.0
 - **用量追踪**：显示每个代理的轮数、token、费用和上下文使用量
 - **中断支持**：Ctrl+C 会传播到子代理进程并终止它们
 
-## 使用
+## 预设 Agent
+
+| Agent | 用途 | 模型 | 工具 |
+|-------|------|------|------|
+| `scout` | 快速代码侦察 | Haiku | read, grep, find, ls, bash |
+| `planner` | 制定实现计划 | Sonnet | read, grep, find, ls |
+| `reviewer` | 代码审查 | Sonnet | read, grep, find, ls, bash |
+| `worker` | 通用工作代理 | Sonnet | （全部默认工具） |
+
+## 工作流预设（Prompt Templates）
+
+安装后可直接使用以下命令：
+
+| 命令 | 说明 |
+|------|------|
+| `/review` | 审查 staged/unstaged 变更；如无本地变更则自动对比 `main`/`master` |
+| `/review <branch>` | 审查当前分支与指定分支的差异 |
+| `/review <PR-URL>` | 审查 GitHub PR（通过 `gh` 或 `curl` 获取 diff） |
+| `/implement <需求>` | 完整实现工作流：scout 侦察 → planner 规划 → worker 实现 |
+| `/scout-and-plan <需求>` | 侦察并制定实现计划（不执行） |
+| `/implement-and-review <需求>` | 实现 + 审查 + 应用反馈的链式工作流 |
+
+### /review 使用示例
+
+```
+/review                          # 审查当前工作区的 staged/unstaged 变更
+/review feature-auth             # 对比 feature-auth 分支与当前分支
+/review https://github.com/ekil1100/pi-subagent/pull/5
+```
 
 ### 单个子代理
 
@@ -53,28 +83,6 @@ Run 2 scouts in parallel: one to find models, one to find providers
 ```
 Use a chain: first have scout find the read tool, then have planner suggest improvements
 ```
-
-### 工作流预设（Prompt Templates）
-
-安装后可直接使用：
-
-```
-/review                                          # review staged/unstaged changes or branch diff
-/review feature-branch                           # review diff against a specific branch
-/review https://github.com/user/repo/pull/123    # review a PR
-/implement add Redis caching to the session store
-/scout-and-plan refactor auth to support OAuth
-/implement-and-review add input validation to API endpoints
-```
-
-## 预设 Agent
-
-| Agent | 用途 | 模型 | 工具 |
-|-------|------|------|------|
-| `scout` | 快速代码侦察 | Haiku | read, grep, find, ls, bash |
-| `planner` | 制定实现计划 | Sonnet | read, grep, find, ls |
-| `reviewer` | 代码审查 | Sonnet | read, grep, find, ls, bash |
-| `worker` | 通用工作代理 | Sonnet | （全部默认工具） |
 
 ## 工具模式
 
@@ -128,7 +136,7 @@ Use the project's testing framework. Run tests to verify they pass.
 Use tester to write tests for src/utils.ts
 ```
 
-## Agent 定义格式
+### Agent 定义格式
 
 Agent 是带 YAML frontmatter 的 Markdown 文件：
 
