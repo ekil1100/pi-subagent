@@ -70,6 +70,9 @@ Use a chain: first have scout find the read tool, then have planner suggest impr
 安装后可直接使用：
 
 ```
+/review                                          # review staged/unstaged changes or branch diff
+/review feature-branch                           # review diff against a specific branch
+/review https://github.com/user/repo/pull/123    # review a PR
 /implement add Redis caching to the session store
 /scout-and-plan refactor auth to support OAuth
 /implement-and-review add input validation to API endpoints
