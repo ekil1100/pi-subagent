@@ -4,37 +4,26 @@
 
 ## 安装
 
-### 通过 pi 包管理器安装（推荐）
+### 全局安装（一行命令）
 
 ```bash
-# 全局安装
-pi install git:github.com/ekil1100/pi-subagent
+pi install git:github.com/ekil1100/pi-subagent && mkdir -p ~/.pi/agent/agents && cp ~/.pi/agent/git/github.com/ekil1100/pi-subagent/agents/*.md ~/.pi/agent/agents/
+```
 
-# 或项目本地安装
-pi install git:github.com/ekil1100/pi-subagent -l
+### 项目本地安装（一行命令）
 
-# 指定版本标签
+```bash
+pi install git:github.com/ekil1100/pi-subagent -l && mkdir -p .pi/agents && cp .pi/git/github.com/ekil1100/pi-subagent/agents/*.md .pi/agents/
+```
+
+### 指定版本
+
+```bash
 pi install git:github.com/ekil1100/pi-subagent@v1.0.0
+# 然后手动复制 agents/*.md（同上）
 ```
 
-### 安装 Agent 定义
-
-**Agent 定义需要手动安装**，因为 pi 目前不通过包管理器自动分发 Agent：
-
-```bash
-# 找到包安装路径
-PKG_PATH=~/.pi/agent/git/github.com/ekil1100/pi-subagent
-
-# 全局安装 agents
-mkdir -p ~/.pi/agent/agents
-cp "$PKG_PATH"/agents/*.md ~/.pi/agent/agents/
-
-# 或项目本地安装
-mkdir -p .pi/agents
-cp .pi/git/github.com/ekil1100/pi-subagent/agents/*.md .pi/agents/
-```
-
-> **注意**：pi 目前不支持通过包自动安装 agents。你需要将 `agents/*.md` 文件手动复制到 `~/.pi/agent/agents/`（全局）或 `.pi/agents/`（项目本地）。
+> **注意**：pi 目前不支持通过包自动安装 agents，因此安装后需要手动将 `agents/*.md` 复制到 `~/.pi/agent/agents/`（全局）或 `.pi/agents/`（项目本地）。
 
 ## 功能
 
