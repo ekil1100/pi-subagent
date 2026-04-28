@@ -123,6 +123,7 @@ Use a chain: first have scout find the read tool, then have planner suggest impr
 name: tester
 description: Write unit tests for the given code
 tools: read, write, bash
+model: claude-sonnet-4-5
 ---
 
 You are a test engineer. Write comprehensive unit tests for the code provided.
@@ -144,6 +145,7 @@ Agent 是带 YAML frontmatter 的 Markdown 文件：
 name: my-agent
 description: What this agent does
 tools: read, grep, find, ls
+model: claude-haiku-4-5
 ---
 
 System prompt for the agent goes here.
@@ -153,6 +155,7 @@ System prompt for the agent goes here.
 - `name`：Agent 的唯一标识（必填）
 - `description`：Agent 的描述（必填）
 - `tools`：（可选）该 Agent 可使用的工具，逗号分隔
+- `model`：（可选）指定模型，如 `claude-sonnet-4-5`
 
 ## 安全模型
 
